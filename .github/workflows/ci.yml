@@ -6,7 +6,7 @@ on:
 
 permissions:
   contents: read
-  packages: write          # omogućuje GITHUB_TOKEN-u push u GHCR
+  packages: write
 
 jobs:
   build:
@@ -14,22 +14,17 @@ jobs:
     env:
       REGISTRY: ghcr.io/pteromyini123
     steps:
-      # ───── 0. Checkout ─────────────────────────────────────────────
       - name: Checkout code
         uses: actions/checkout@v4
-
-      # ───── 1. Učitaj ver. iz VERSION ──────────────────────────────
+        
       - name: Read VERSION
         id: read-version
         run: echo "TAG=$(cat VERSION)" >> $GITHUB_OUTPUT
 
-      # ───── 2. Dummy tests (placeholder) ───────────────────────────
       - name: Dummy tests
         run: |
-          echo "🔎 Placeholder tests passed"
-          # ovdje bi išao 'pytest -q' kad dodaš prave testove
+          echo "Placeholder tests passed"
 
-      # ───── 3. Login + Buildx set-up ───────────────────────────────
       - name: Log-in to GHCR (via built-in token)
         uses: docker/login-action@v3
         with:
@@ -40,7 +35,6 @@ jobs:
       - name: Set-up Buildx
         uses: docker/setup-buildx-action@v3
 
-      # ───── 4. SERVICE 1  build & push ─────────────────────────────
       - name: Build & push service1
         uses: docker/build-push-action@v5
         with:
@@ -51,7 +45,7 @@ jobs:
             ${{ env.REGISTRY }}/service1:${{ steps.read-version.outputs.TAG }}
             ${{ env.REGISTRY }}/service1:latest
 
-      # ───── 5. SERVICE 2  build & push ─────────────────────────────
+
       - name: Build & push service2
         uses: docker/build-push-action@v5
         with:
