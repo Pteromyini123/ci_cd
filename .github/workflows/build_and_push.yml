@@ -38,7 +38,7 @@ jobs:
       - name: Build & push service1
         uses: docker/build-push-action@v5
         with:
-          context: ./CI_CD/service1
+          context: ./services/service1
           push: true
           visibility: public
           tags: |
@@ -49,7 +49,7 @@ jobs:
       - name: Build & push service2
         uses: docker/build-push-action@v5
         with:
-          context: ./CI_CD/service2
+          context: ./services/service2
           push: true
           visibility: public
           tags: |
