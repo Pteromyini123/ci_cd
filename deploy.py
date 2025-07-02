@@ -33,6 +33,11 @@ else:
     run(["docker", "network", "create", args.network])
 
 
+subprocess.run(["docker", "rm", "-f", "service1"],
+               stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+subprocess.run(["docker", "rm", "-f", "service2"],
+               stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
 run([
     "docker", "run", "--rm", "-d",
     "--name", "service1",
